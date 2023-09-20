@@ -2,17 +2,19 @@
 
 import numpy as np
 import numpy.testing as npt
+import pytest
 
-def test_daily_mean_nan():
+@pytest.mark.parametrize(
+        "test, expected",
+        [
+            ([[0, 0],[0, 0],[0, np.nan]], [0, np.nan]),
+            ([[0, 0],[0, 0],[0, 0]], [0, 0]),
+        ]
+)
+def test_daily_mean_nan(test, expected):
     """Tests that daily_mean works with nan"""
     from inflammation.models import daily_mean
-
-    test_input = np.array([[0, 0],
-                           [0, 0],
-                           [0, np.nan]])
-    test_result = np.array([0, np.nan])
-
-    npt.assert_array_equal(daily_mean(test_input), test_result)
+    npt.assert_array_equal(daily_mean(np.array(test)), np.array(expected))
 
 def test_daily_mean_zeros():
     """Test that mean function works for an array of zeros."""
