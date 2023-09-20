@@ -5,7 +5,18 @@ import argparse
 
 from inflammation import models, views
 
+def myFunction(m, n):
+    """_summary_
 
+    Args:
+        m (_type_): _description_
+        n (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    a, b = m, n
+    return a, b
 def main(args):
     """The MVC Controller of the patient inflammation data system.
 
@@ -21,18 +32,22 @@ def main(args):
     for filename in InFiles:
         inflammation_data = models.load_csv(filename)
 
-        view_data = {'average': models.daily_mean(inflammation_data), 'max': models.daily_max(inflammation_data), 'min': models.daily_min(inflammation_data)}
+        view_data = {
+            'average': models.daily_mean(inflammation_data), 
+            'max': models.daily_max(inflammation_data), 
+            'min': models.daily_min(inflammation_data)
+        }
 
         views.visualize(view_data)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='A basic patient inflammation data management system')
+        description = 'A basic patient inflammation data management system')
 
     parser.add_argument(
         'infiles',
-        nargs='+',
-        help='Input CSV(s) containing inflammation series for each patient')
+        nargs = '+',
+        help = 'Input CSV(s) containing inflammation series for each patient')
 
     args = parser.parse_args()
 
